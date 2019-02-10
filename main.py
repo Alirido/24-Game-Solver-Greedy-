@@ -25,6 +25,9 @@ def readFile():
 	digits = data.split()
 	return digits
 
+def solve(arr): # USING GREEDY ALGORITHM
+	
+
 def main():
 	welcome()
 	docum()
@@ -32,6 +35,7 @@ def main():
 	while not (c.lower() == 'q'):
 		if (c.lower() == 'i'):
 			digits = readFile()
+			solve(digits)
 			for num in digits:
 				print(num)
 			print()
