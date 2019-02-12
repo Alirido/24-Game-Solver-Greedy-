@@ -129,7 +129,7 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
 									break
 								if result == 24:
 									if '/' in ops:
-										exp = [ (term if not term.startswith('F(') else term[2])
+										exp = [ (term if not term.startswith('F(') else term[2] if term[3]==')' else term[2]+term[3])
 										for term in exp ]
 									ans = ' '.join(exp).rstrip()
 									print ("\nBest solution found: ", ans)
@@ -140,7 +140,7 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
 									if (current_score > max_score):
 										max_score = current_score
 										if '/' in ops:
-											exp = [ (term if not term.startswith('F(') else term[2])
+											exp = [ (term if not term.startswith('F(') else term[2] if term[3]==')' else term[2]+term[3])
 											for term in exp ]
 										ans = ' '.join(exp).rstrip()
 								break
