@@ -1,12 +1,20 @@
 from itertools import permutations, product, zip_longest, chain
 from fractions import Fraction as F
+import sys
 
-def readFile():
-	f = open("test.txt")
+def readFile(filename):
+	f = open(filename)
 	data = f.readline()
 	digits = data.split()
 	f.close()
 	return digits
+
+def writeFile(filename, answer):
+	f = open(filename, "w")
+	f.write(answer)
+	f.close()
+	print("THANK YOU FOR USING ME.")
+	print("GOODBYE:)")
 
 def ito(x): # ito = Integer to Operator
 	if (x==5):
@@ -32,9 +40,6 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
                          for y in range(x+4, 9, 2)
                          if (x,y) != (0,8)]
                  + [(0, 3+1, 4+2, 7+3)] ) # double brackets case
-
-	# Open file to be wrote with the result
-	output = open("output.txt", "w")
 
 	# for bracket in brackets:
 	for bracket in range(0, 7):
@@ -100,9 +105,6 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
 									exp.insert(op3+1+2, '(')
 									exp.insert(last+3, ')')
 
-								# for insertpoint, br in zip(bracket, '()'*min_score):
-								# 	exp.insert(insertpoint, br)
-
 								txt = ''.join(exp)
 								try:
 									result = eval(txt)
@@ -113,7 +115,6 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
 										exp = [ (term if not term.startswith('F(') else term[2] if term[3]==')' else term[2]+term[3])
 										for term in exp ]
 									ans = ' '.join(exp).rstrip()
-									output.write(ans)
 									return ans
 								else:
 									current_score = a+b+c - min_score - abs(24 - result)
@@ -124,11 +125,11 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
 											for term in exp ]
 										ans = ' '.join(exp).rstrip()
 								break
-	output.write(ans)
-	output.close()
+	return ans
 
 def main():
-	digits = readFile()
-	solveUsingGreedy(digits)
+	digits = readFile(sys.argv[1])
+	answer = solveUsingGreedy(digits)
+	writeFile(sys.argv[2], answer)
 
 main()
