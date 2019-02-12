@@ -99,11 +99,14 @@ def solve(digits):
             else:
                 d2 = d
             ex = list(chain.from_iterable(zip_longest(d2, ops, fillvalue='')))
+            # print("Ex = ", ex)
             for b in brackets:
-                exp = ex[::]
+                exp = ex[::] # copy by value, if you want to copy by reference use this exp=ex
                 for insertpoint, bracket in zip(b, '()'*(len(b)//2)):
                     exp.insert(insertpoint, bracket)
+                    # print("Exp = ", exp)
                 txt = ''.join(exp)
+                # print("txt= ", txt)
                 try:
                     num = eval(txt)
                 except ZeroDivisionError:
