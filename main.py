@@ -7,9 +7,7 @@ from itertools import permutations, product, zip_longest, chain
 from fractions import Fraction as F
 
 def welcome():
-	print(__doc__)
-	print("Enter your input file: ")
-	print("Untuk sementara input manual dulu aja disini:")
+	print(__doc__, end="")
 
 def docum():
 	print("\nList of commands: ")
@@ -87,7 +85,8 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
 										exp = [ (term if not term.startswith('F(') else term[2])
 										for term in exp ]
 									ans = ' '.join(exp).rstrip()
-									print ("Best solution found: ", ans)
+									print ("\nBest solution found: ", ans)
+									print ()
 									return ans
 								else:
 									current_score = a+b+c - min_score - abs(24 - result)
@@ -98,8 +97,9 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
 											for term in exp ]
 										ans = ' '.join(exp).rstrip()
 								break
-	print ("Solution found: ", ans)
+	print ("\nSolution found: ", ans)
 	print ("Score: ", max_score)
+	print ()
 
 def main():
 	welcome()
