@@ -47,13 +47,19 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
 
 	# All the bracket insertion points:
 	brackets = ( [()] + [(x,y)
-                         for x in range(0, 7, 2)
+                         for x in range(0, 5, 2)
                          for y in range(x+4, 9, 2)
                          if (x,y) != (0,8)]
                  + [(0, 3+1, 4+2, 7+3)] ) # double brackets case
 
-	for bracket in brackets:
-		min_score = len(bracket)//2
+	# for bracket in brackets:
+	for bracket in range(0, 7):
+		if bracket == 0:
+			min_score = 0
+		elif bracket == 6:
+			min_score = 2
+		else:
+			min_score = 1
 		for op_score in range(16, 5, -1):
 			for d in arr_d:
 
@@ -71,11 +77,52 @@ def solveUsingGreedy(arr): # USING GREEDY ALGORITHM
 								else:
 									d2 = d
 								exp = list(chain.from_iterable(zip_longest(d2, ops, fillvalue='')))
+								print("exp= ", exp)
 
-								for insertpoint, br in zip(bracket, '()'*min_score):
-									exp.insert(insertpoint, br)
+								# INSERTION OF BRACKET
+								tid = 0
+								count = 0
+								op1 = -1
+								op2 = -1
+								op3 = -1
+								for x in exp:
+									if (x in "+-*/"):
+										count += 1
+										if count == 1:
+											op1 = tid
+										elif count == 2:
+											op2 = tid
+										elif count == 3:
+											op3 = tid
+									tid += 1
+								last = tid
+
+								print("%d %d %d %d" % (op1, op2, op3, last))
+								if bracket == 1: 
+									exp.insert(0, '(')
+									exp.insert(op2+1, ')')
+								elif bracket == 2:
+									exp.insert(0, '(')
+									exp.insert(op3+1, ')')
+								elif bracket == 3:
+									exp.insert(op1+1, '(')
+									exp.insert(op3+1, ')')
+								elif bracket == 4:
+									exp.insert(op1+1, '(')
+									exp.insert(last+1, ')')
+								elif bracket == 5:
+									exp.insert(op2+1, '(')
+									exp.insert(last+1, ')')
+								elif bracket == 6:
+									exp.insert(0, '(')
+									exp.insert(op2+1, ')')
+									exp.insert(op3+1+2, '(')
+									exp.insert(last+3, ')')
+
+								# for insertpoint, br in zip(bracket, '()'*min_score):
+								# 	exp.insert(insertpoint, br)
+
 								txt = ''.join(exp)
-
 								try:
 									result = eval(txt)
 								except ZeroDivisionError:
@@ -116,24 +163,6 @@ def main():
 			digits = readFile()
 			d2 = [('F(%s)' % i) for i in digits]
 			print("d2 = ", d2)
-
-
-			# brackets = ( [()] + [(x,y)
-   #                       for x in range(0, 7, 2)
-   #                       for y in range(x+4, 7+2, 2)
-   #                       if (x,y) != (0,7+1)]
-   #               + [(0, 3+1, 4+2, 7+3)] ) # double brackets case
-
-			# print("Brackets = ", brackets)
-
-			# for b in brackets:
-			# 	tes = zip(b, '()'*(len(b)//2))
-			# 	tes = set(tes)
-			# 	# testt = '()'*(len(b)//2)
-			# 	print("zip= ", tes)
-
-			# temp = ([-1] + [(1, 2, 3, 4, 5, 1001238)] + [-11, -22])
-			# print("Mylist = ", temp)
 		else:
 			print("%s is invalid input." % c)
 		c = input("Enter command: ")
